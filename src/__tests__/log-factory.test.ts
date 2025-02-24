@@ -4,8 +4,7 @@ import * as path from "path";
 import * as winston from 'winston';
 import {
     createLogger,
-    createSimpleLogger,
-    type LoggerOptions
+    createSimpleLogger
 } from "../log-facotry";
 import type { Environment } from '../types';
 import { MB } from '../utils';
@@ -17,11 +16,6 @@ const TEST_LOG_DIR = process.env.LOG_DIR || path.join(process.cwd(), 'test-logs'
 
 describe("Logger Factory", () => {
   const originalNodeEnv = process.env.NODE_ENV;
-  const testLoggerOptions: LoggerOptions = {
-    logName: "test-logger",
-    level: "info",
-    logDirectory: TEST_LOG_DIR,
-  };
 
   beforeEach(() => {
     // Reset NODE_ENV
@@ -47,22 +41,36 @@ describe("Logger Factory", () => {
   });
 
   test("creates logger with correct options", () => {
-    const logger = createLogger(testLoggerOptions);
+    const logName = 'test-options'
+    const logger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName,
+      level: 'info'
+    });
     expect(logger).toBeDefined();
     expect(logger.level).toBe("info");
   });
 
   test("respects environment-specific defaults", () => {
     process.env.NODE_ENV = "production";
-    const prodLogger = createLogger();
+    const prodLogger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName: 'test-prod'
+    });
     expect(prodLogger.level).toBe("info");
 
     process.env.NODE_ENV = "development";
-    const devLogger = createLogger();
+    const devLogger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName: 'test-dev'
+    });
     expect(devLogger.level).toBe("debug");
 
     process.env.NODE_ENV = "test";
-    const testLogger = createLogger();
+    const testLogger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName: 'test-test'
+    });
     expect(testLogger.level).toBe("debug");
   });
 
