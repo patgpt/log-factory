@@ -1,8 +1,4 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/bin/sh
 
-# Export PATH to include Bun
-export PATH="$PATH:$(dirname $(which node))"
-
-# Run tests
-bun test
+# Run tests using absolute path to Bun
+/opt/homebrew/bin/bun test
