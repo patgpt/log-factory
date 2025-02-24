@@ -109,22 +109,29 @@ describe("Logger Factory", () => {
   });
 
   test("respects log levels", async () => {
-    const errorLogger = createLogger({
-      ...testLoggerOptions,
-      level: "error",
+    const logName = 'test-levels'
+    const logger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName,
+      enableFileLogging: true,
+      separateErrorLog: true,
+      level: "error"
     });
 
-    errorLogger.info("This should not be logged");
-    errorLogger.error("This should be logged");
+    logger.info("This should not be logged");
+    logger.error("This should be logged");
 
-    // Give the file system a moment to write
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // Wait for file writes to complete
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const allLogsPath = path.join(TEST_LOG_DIR, "test-logger/test-logger-All.log");
-    const errorLogsPath = path.join(TEST_LOG_DIR, "test-logger/test-logger-Error.log");
+    // Construct correct file paths
+    const logDir = path.join(TEST_LOG_DIR, logName)
+    const errorLogPath = path.join(logDir, `${logName}-error.log`)
+    const allLogsPath = path.join(logDir, `${logName}-All.log`)
 
+    // Read and verify file contents
     const allLogs = fs.readFileSync(allLogsPath, "utf-8");
-    const errorLogs = fs.readFileSync(errorLogsPath, "utf-8");
+    const errorLogs = fs.readFileSync(errorLogPath, "utf-8");
 
     // Info message should not be in any log file
     expect(allLogs).not.toContain("This should not be logged");
@@ -136,11 +143,15 @@ describe("Logger Factory", () => {
   });
 
   test("custom pretty print format works", async () => {
+    const logName = 'test-pretty'
     const logger = createLogger({
-      ...testLoggerOptions,
+      logDirectory: TEST_LOG_DIR,
+      logName,
       prettyPrint: true,
-      enableConsoleLogging: true
+      enableConsoleLogging: true,
+      level: 'info'
     });
+
     const testObject = { test: "value" };
     let capturedOutput = "";
 
@@ -188,10 +199,13 @@ describe("Logger Factory", () => {
   });
 
   test("handles file system errors gracefully", () => {
+    const logName = 'test-errors'
     const logger = createLogger({
-      ...testLoggerOptions,
+      logDirectory: TEST_LOG_DIR,
+      logName,
       enableFileLogging: false,
-      enableConsoleLogging: true
+      enableConsoleLogging: true,
+      level: 'info'
     });
 
     // This should not throw an error
@@ -201,9 +215,12 @@ describe("Logger Factory", () => {
   });
 
   test("respects silent mode", () => {
+    const logName = 'test-silent'
     const logger = createLogger({
-      ...testLoggerOptions,
-      silent: true
+      logDirectory: TEST_LOG_DIR,
+      logName,
+      silent: true,
+      level: 'info'
     });
 
     let capturedOutput = "";
@@ -220,7 +237,14 @@ describe("Logger Factory", () => {
   });
 
   test("handles JSON logging correctly", async () => {
-    const logger = createLogger(testLoggerOptions);
+    const logName = 'test-json'
+    const logger = createLogger({
+      logDirectory: TEST_LOG_DIR,
+      logName,
+      enableFileLogging: true,
+      level: 'info'
+    });
+
     const testData = {
       userId: 123,
       action: "login",
@@ -229,9 +253,14 @@ describe("Logger Factory", () => {
 
     logger.info(JSON.stringify(testData));
 
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    // Wait for file writes to complete
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const allLogsPath = path.join(TEST_LOG_DIR, "test-logger/test-logger-All.log");
+    // Construct correct file paths
+    const logDir = path.join(TEST_LOG_DIR, logName)
+    const allLogsPath = path.join(logDir, `${logName}-All.log`)
+
+    // Read and verify file contents
     const logContent = fs.readFileSync(allLogsPath, "utf-8");
 
     expect(logContent).toContain("userId");
