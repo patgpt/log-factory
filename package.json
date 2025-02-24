@@ -1,96 +1,37 @@
 {
   "name": "loggerama3000",
-  "version": "1.0.0",
-  "description": "A flexible and powerful logging solution for Node.js, Next.js, and Bun applications",
+  "version": "0.0.0-development",
+  "description": "A flexible and type-safe logging solution with Winston",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node",
     "test": "bun test",
     "test:coverage": "bun test --coverage",
     "clean": "rm -rf dist",
-    "prepublishOnly": "bun run clean && bun run build",
-    "prepare": "husky",
-    "format": "prettier --write .",
-    "lint": "eslint --fix ."
+    "semantic-release": "semantic-release"
   },
-  "displayName": "Log Factory",
-  "icon": "📢",
-  "readme": "https://github.com/patgpt/log-factory/blob/main/README.md",
-  "markdown": "github",
-  "contributors": [
-    {
-      "name": "Patrick Kelly",
-      "url": "https://github.com/patgpt"
-    }
-  ],
   "keywords": [
     "logging",
-    "logger",
     "winston",
-    "nextjs",
-    "bun",
     "typescript",
-    "node"
+    "bun",
+    "logger"
   ],
-  "author": "Patrick Kelly",
-  "categories": ["Debuggers"],
-  "trustedDependencies": [
-    "winston",
-    "winston-daily-rotate-file"
-  ],
-  "badges": [
-    {
-      "name": "github",
-      "url": "https://github.com/patgpt/log-factory",
-      "icon": "github",
-      "description": "Log Factory",
-      "href": "https://github.com/patgpt/log-factory"
-    }
-  ],
+  "author": "Your Name",
   "license": "MIT",
-  "dependencies": {
-    "eslint": "9.21.0",
-    "eslint-config-prettier": "10.0.1",
-    "eslint-plugin-prettier": "5.2.3",
-    "lint-staged": "15.4.3",
-    "prettier": "3.5.2",
-    "winston": "^3.11.0",
-    "winston-daily-rotate-file": "5.0.0"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/commit-analyzer": "13.0.1",
-    "@semantic-release/git": "10.0.1",
-    "@semantic-release/release-notes-generator": "14.0.3",
-    "@types/node": "^20.11.19",
-    "husky": "9.1.7",
-    "semantic-release": "24.2.3",
-    "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "winston": "^3.11.0"
-  },
-  "engines": {
-    "node": ">=16.0.0",
-    "bun": ">=1.0.0"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/loggerama3000.git"
+    "url": "https://github.com/yourusername/loggerama3000.git"
   },
   "bugs": {
     "url": "https://github.com/yourusername/loggerama3000/issues"

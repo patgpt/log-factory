@@ -31,7 +31,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v0.1.8
         with:
           bun-version: latest
 
@@ -59,10 +59,16 @@ jobs:
           verbose: true
 
       - name: Build package
-        run: bun run build
+        run: |
+          bun run clean
+          bun run build
 
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: bunx semantic-release 
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # Verify npm authentication
+          npm whoami
+          # Run semantic release
+          bunx semantic-release 
