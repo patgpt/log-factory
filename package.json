@@ -14,7 +14,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "build": "bun build ./src/index.ts --target node --outdir ./dist ",
     "test": "bun test",
     "test:coverage": "bun test --coverage",
     "clean": "rm -rf dist",
