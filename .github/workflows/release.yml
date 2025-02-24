@@ -31,9 +31,15 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v0.1.8
+        uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
+
+      - name: Verify Bun installation
+        run: |
+          bun --version
+          which bun
+          echo $PATH
 
       - name: Install dependencies
         run: |
@@ -74,5 +80,5 @@ jobs:
         run: |
           # Verify npm authentication
           npm whoami
-          # Run semantic release
-          bunx semantic-release 
+          # Run semantic release with npx as fallback if bunx fails
+          bun x semantic-release || npx semantic-release 

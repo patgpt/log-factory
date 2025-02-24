@@ -1,25 +1,42 @@
-# Loggerama3000
+# Loggerama3000 🪵✨
 
-A flexible and powerful logging solution for Node.js, Next.js, and Bun applications.
+<div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Bun](https://img.shields.io/badge/Bun-000000?style=for-the-badge&logo=bun&logoColor=white)](https://bun.sh/)
-[![Winston](https://img.shields.io/badge/Winston-black?style=for-the-badge)](https://github.com/winstonjs/winston)
+[![npm version](https://badge.fury.io/js/loggerama3000.svg)](https://badge.fury.io/js/loggerama3000)
+[![Tests](https://github.com/yourusername/loggerama3000/actions/workflows/tests.yml/badge.svg)](https://github.com/yourusername/loggerama3000/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/yourusername/loggerama3000/branch/main/graph/badge.svg?token=your-token)](https://codecov.io/gh/yourusername/loggerama3000)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+</div>
 
-- 🚀 Environment-aware configuration (development, production, test)
-- 📝 Multiple log levels (error, debug, warn, data, info, verbose, silly)
-- 🎨 Colorized console output
-- 📁 File-based logging with rotation
-- 🔄 Automatic log file rotation and cleanup
-- 🎯 Separate error and warning log files
-- 🌈 Pretty printing for JSON objects
-- ⚡ Optimized for Next.js and Bun
-- 🔧 Highly configurable
+<p align="center">
+  <strong>A flexible and type-safe logging solution built with Winston, designed for Node.js and Bun applications.</strong>
+</p>
 
-## Installation
+<p align="center">
+  <a href="https://x.com/AGIManifesto">
+    <img src="https://img.shields.io/badge/Follow_@AGIManifesto-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" />
+  </a>
+  <a href="https://linkedin.com/in/patgpt">
+    <img src="https://img.shields.io/badge/Connect_on_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect on LinkedIn" />
+  </a>
+</p>
+
+---
+
+## ✨ Features
+
+- 🔒 **Type-Safe**: Built with TypeScript for complete type safety
+- 🎯 **Environment-Aware**: Different configurations for development, production, and test
+- 📁 **File Rotation**: Automatic log file rotation with size and date-based options
+- 🎨 **Pretty Printing**: Optional pretty printing for JSON logs
+- 🚨 **Error Handling**: Separate error and warning log files
+- 🔄 **Daily Rotation**: Optional daily log file rotation
+- 💾 **Path Safety**: Type-safe path handling for log files
+- 🛡️ **Secure**: Proper file permissions and error handling
+
+## 📦 Installation
 
 ```bash
 # Using npm
@@ -32,144 +49,150 @@ bun add loggerama3000
 yarn add loggerama3000
 ```
 
-## Quick Start
-
-```typescript
-import { logger } from 'loggerama3000';
-
-// Use the default logger
-logger.info('Hello, World!');
-logger.error('Something went wrong!');
-logger.debug({ message: 'Debug info', data: { foo: 'bar' } });
-```
-
-## Usage with Next.js
-
-```typescript
-// app/lib/logger.ts
-import { createNextLogger } from 'loggerama3000';
-
-export const logger = createNextLogger();
-
-// In your components/pages
-import { logger } from '@/lib/logger';
-
-logger.info('Page loaded');
-logger.error('API call failed', { status: 500 });
-```
-
-## Usage with Bun
-
-```typescript
-import { createBunLogger } from 'loggerama3000';
-
-const logger = createBunLogger({
-  logName: 'my-bun-app'
-});
-
-logger.info('Server started');
-```
-
-## Custom Configuration
+## 🚀 Quick Start
 
 ```typescript
 import { createLogger } from 'loggerama3000';
 
+// Create a logger with default settings
+const logger = createLogger();
+
+// Log messages
+logger.info('Hello, World! 👋');
+logger.error('Something went wrong 💥', { error: 'details' });
+logger.warn('Warning message ⚠️');
+```
+
+## ⚙️ Configuration
+
+### Basic Configuration
+
+```typescript
 const logger = createLogger({
-  // Basic configuration
   logName: 'my-app',
-  level: 'debug',
   logDirectory: './logs',
-  
-  // File logging options
+  level: 'info',
   enableFileLogging: true,
-  maxFileSize: 5 * 1024 * 1024, // 5MB
+  enableConsoleLogging: true
+});
+```
+
+### 🌍 Environment-Specific Configuration
+
+```typescript
+// Development (default)
+const devLogger = createLogger({
+  level: 'debug',
+  prettyPrint: true,
+  colorize: true
+});
+
+// Production
+const prodLogger = createLogger({
+  level: 'info',
+  useDailyRotation: true,
+  maxFileSize: MB(10),
+  maxFiles: 10
+});
+
+// Test
+const testLogger = createLogger({
+  level: 'debug',
+  silent: true // Disable logging in tests
+});
+```
+
+### 🔧 Advanced Features
+
+```typescript
+const logger = createLogger({
+  // Basic settings
+  logName: 'my-app',
+  logDirectory: './logs',
+  level: 'info',
+
+  // File handling
+  enableFileLogging: true,
+  maxFileSize: MB(5),
   maxFiles: 5,
+  useDailyRotation: true,
+
+  // Separate log files
   separateErrorLog: true,
   separateWarnLog: true,
-  
-  // Console logging options
+
+  // Console output
   enableConsoleLogging: true,
   prettyPrint: true,
   colorize: true,
-  
-  // Date formatting
+
+  // Formatting
   timestampFormat: 'YYYY-MM-DD HH:mm:ss',
   locale: 'en-US',
-  
-  // Additional options
-  silent: false,
+
+  // Error handling
   handleExceptions: true,
   handleRejections: true
 });
 ```
 
-## Module-specific Loggers
+## 📚 API Reference
+
+### `createLogger(options?: LoggerOptions)`
+
+Creates a new logger instance with the specified options.
+
+#### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `logName` | `string` | `'app'` | Name of the logger instance |
+| `logDirectory` | `string` | `'./logs'` | Base directory for log files |
+| `level` | `LogLevel` | `'debug'` | Minimum log level to record |
+| `enableFileLogging` | `boolean` | `true` | Enable file-based logging |
+| `enableConsoleLogging` | `boolean` | `true` | Enable console logging |
+| `maxFileSize` | `number` | `5MB` | Maximum size of each log file |
+| `maxFiles` | `number` | `5` | Maximum number of log files to keep |
+| `useDailyRotation` | `boolean` | `false` | Enable daily log rotation |
+| `separateErrorLog` | `boolean` | `true` | Create separate error log file |
+| `separateWarnLog` | `boolean` | `true` | Create separate warning log file |
+| `prettyPrint` | `boolean` | `false` | Enable pretty printing of logs |
+| `colorize` | `boolean` | `false` | Enable colorized output |
+| `silent` | `boolean` | `false` | Disable all logging |
+
+### `createSimpleLogger(env?: Environment)`
+
+Creates a simple logger with environment-specific defaults.
 
 ```typescript
-import { createModuleLogger } from 'loggerama3000';
-
-const authLogger = createModuleLogger('auth');
-const dbLogger = createModuleLogger('database');
-
-authLogger.info('User logged in');
-dbLogger.error('Connection failed');
+const logger = createSimpleLogger('production');
 ```
 
-## Environment-specific Defaults
+## 💻 Environment Support
 
-The logger automatically uses different defaults based on your `NODE_ENV`:
+- Node.js >=16.0.0
+- Bun >=1.0.0
 
-### Development
-- Debug level enabled
-- Console logging with colors
-- Pretty printing
-- 5MB max file size
-- 5 log files retained
+## 🤝 Contributing
 
-### Production
-- Info level
-- File logging only
-- No pretty printing
-- 10MB max file size
-- 10 log files retained
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes using conventional commits
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Test
-- Debug level
-- File logging only
-- 1MB max file size
-- 2 log files retained
+## 📄 License
 
-## Log Levels
+MIT License - see the [LICENSE](LICENSE) file for details
 
-From highest to lowest priority:
-1. error (0)
-2. debug (1)
-3. warn (2)
-4. data (3)
-5. info (4)
-6. verbose (5)
-7. silly (6)
+## 👨‍💻 Author
 
-## Log Directory Structure
+**Patrick Kelly**
+- X (Twitter): [@AGIManifesto](https://x.com/AGIManifesto)
+- LinkedIn: [patgpt](https://linkedin.com/in/patgpt)
 
-```
-logs/
-├── my-app/
-│   ├── my-app-All.log
-│   ├── my-app-Error.log
-│   └── my-app-Warn.log
-└── globalLog.log
-```
+---
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT
-
-## Dependencies
-
-- [winston](https://github.com/winstonjs/winston) - A logger for just about everything.
+<div align="center">
+  <sub>Built with ❤️ by Patrick Kelly</sub>
+</div>
