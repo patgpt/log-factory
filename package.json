@@ -1,5 +1,5 @@
 {
-  "name": "loggerama3000",
+  "name": "log-factory",
   "version": "0.0.0-development",
   "description": "A flexible and type-safe logging solution with Winston",
   "main": "dist/index.js",
@@ -51,10 +51,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/loggerama3000.git"
+    "url": "https://github.com/patgpt/log-factory.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/loggerama3000/issues"
+    "url": "https://github.com/patgpt/log-factory/issues"
   },
-  "homepage": "https://github.com/yourusername/loggerama3000#readme"
+  "homepage": "https://github.com/patgpt/lo#readme"
 }
