@@ -26,7 +26,6 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "lint": "eslint --fix ."
-    
   },
   "displayName": "Log Factory",
   "icon": "📢",
@@ -73,8 +72,13 @@
     "winston-daily-rotate-file": "5.0.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/release-notes-generator": "14.0.3",
     "@types/node": "^20.11.19",
     "husky": "9.1.7",
+    "semantic-release": "24.2.3",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {

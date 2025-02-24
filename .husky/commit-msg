@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Get the commit message
+commit_msg=$(cat "$1")
+
+# Regex pattern for conventional commits
+# Format: type(scope): description
+pattern="^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\([a-z0-9-]+\))?: .+"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "Error: Invalid commit message format."
+  echo "Must follow format: type(scope): description"
+  echo "Types: feat, fix, docs, style, refactor, perf, test, chore, ci, build, revert"
+  echo "Example: feat(auth): add login functionality"
+  exit 1
+fi 
