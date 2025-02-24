@@ -10,9 +10,10 @@ import {
 import type { Environment } from '../types';
 import { MB } from '../utils';
 
-const TEST_LOG_DIR = "./src/__tests__/logs";
-
 const environments: Environment[] = ['development', 'production', 'test'];
+
+// Use LOG_DIR environment variable or fallback to test-logs
+const TEST_LOG_DIR = process.env.LOG_DIR || path.join(process.cwd(), 'test-logs');
 
 describe("Logger Factory", () => {
   const originalNodeEnv = process.env.NODE_ENV;

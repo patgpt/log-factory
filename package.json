@@ -18,8 +18,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "bun build ./src/log-facotry.ts --outdir ./dist",
-    "test": "bun test --coverage --reporter=junit --reporter-outfile=coverage/coverage.junit",
+    "build": "bun build ./src/index.ts --outdir ./dist --target node",
+    "test": "bun test",
     "test:coverage": "bun test --coverage",
     "clean": "rm -rf dist",
     "prepublishOnly": "bun run clean && bun run build",
