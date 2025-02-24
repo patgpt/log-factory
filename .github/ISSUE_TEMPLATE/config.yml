@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/yourusername/loggerama3000/discussions
+    about: Please ask and answer questions here.
+  - name: Documentation
+    url: https://github.com/yourusername/loggerama3000#readme
+    about: Please check our documentation first.
+  - name: Security Issues
+    url: https://github.com/yourusername/loggerama3000/security/policy
+    about: Please report security vulnerabilities here. 

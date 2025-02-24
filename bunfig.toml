@@ -1,0 +1,20 @@
+[install]
+# Use exact versions for dependencies
+exact = true
+# Save dependencies to devDependencies by default
+dev = true
+auto = "auto"
+[test]
+# Use the Jest-like test runner
+preload = "./src/__tests__/setup.ts"
+coverage = true
+
+ root = "./src"
+ coverageDir = "./coverage"
+ coverageReporter = ["lcov", "text"]    
+ 
+ 
+
+[install.scopes]
+# Use the GitHub Package Registry for scoped packages
+"@logfactory" = "https://npm.pkg.github.com" 
