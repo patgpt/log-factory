@@ -30,6 +30,7 @@ describe("Logger Factory", () => {
     if (fs.existsSync(TEST_LOG_DIR)) {
       fs.rmSync(TEST_LOG_DIR, { recursive: true, force: true });
     }
+    fs.mkdirSync(TEST_LOG_DIR, { recursive: true });
   });
 
   afterAll(() => {
@@ -66,9 +67,10 @@ describe("Logger Factory", () => {
   });
 
   test("writes to log files", async () => {
+    const logName = 'test-write'
     const logger = createLogger({
       logDirectory: TEST_LOG_DIR,
-      logName: 'test-write',
+      logName,
       enableFileLogging: true,
       separateErrorLog: true,
       separateWarnLog: true,
@@ -83,21 +85,22 @@ describe("Logger Factory", () => {
     // Wait longer for file writes to complete
     await new Promise(resolve => setTimeout(resolve, 500))
 
-    const errorLogPath = path.join(TEST_LOG_DIR, 'test-write', 'test-write-error.log')
-    const warnLogPath = path.join(TEST_LOG_DIR, 'test-write', 'test-write-warn.log')
-    const allLogsPath = path.join(TEST_LOG_DIR, 'test-write', 'test-write-All.log')
+    // Construct correct file paths
+    const logDir = path.join(TEST_LOG_DIR, logName)
+    const errorLogPath = path.join(logDir, `${logName}-error.log`)
+    const warnLogPath = path.join(logDir, `${logName}-warn.log`)
+    const allLogsPath = path.join(logDir, `${logName}-All.log`)
 
     // Check file existence
     expect(fs.existsSync(errorLogPath)).toBe(true)
     expect(fs.existsSync(warnLogPath)).toBe(true)
     expect(fs.existsSync(allLogsPath)).toBe(true)
 
-    // Read file contents
+    // Read and verify file contents
     const errorContent = fs.readFileSync(errorLogPath, 'utf8')
     const warnContent = fs.readFileSync(warnLogPath, 'utf8')
     const allContent = fs.readFileSync(allLogsPath, 'utf8')
 
-    // Check each log file for appropriate messages
     expect(errorContent).toContain('ERROR: Error message')
     expect(warnContent).toContain('WARN: Warning message')
     expect(allContent).toContain('ERROR: Error message')
