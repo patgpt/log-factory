@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/patgpt/log-factory/compare/v1.0.3...v1.0.4) (2025-02-25)
+
+
+### Bug Fixes
+
+* **npm:** update package name references for publishing ([eb923dd](https://github.com/patgpt/log-factory/commit/eb923dd8931d7f52b027523bfa2643216b399585))
+* revert package name from log-factory to loggerama3000 in package.json and update homepage URL ([3e87586](https://github.com/patgpt/log-factory/commit/3e87586dce457d4fc57140575222b6773fe50189))
+
 ## [1.0.3](https://github.com/patgpt/log-factory/compare/v1.0.2...v1.0.3) (2025-02-25)
 
 
