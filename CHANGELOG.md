@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/patgpt/loggerama3000/compare/v1.0.8...v1.0.9) (2025-02-25)
+
+
+### Bug Fixes
+
+* update EditorConfig with minor comment modification ([e97d75e](https://github.com/patgpt/loggerama3000/commit/e97d75ea395538e50ffb927a8115e4635615dcec))
+
 ## [1.0.8](https://github.com/patgpt/loggerama3000/compare/v1.0.7...v1.0.8) (2025-02-25)
 
 
