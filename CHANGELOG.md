@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/patgpt/log-factory/compare/v1.0.6...v1.0.7) (2025-02-25)
+
+
+### Bug Fixes
+
+* update package name from log-factory to loggerama3000 in bun.lock and package.json ([120af81](https://github.com/patgpt/log-factory/commit/120af8177971259c181df42138a1d841eba3c25d))
+
 ## [1.0.5](https://github.com/patgpt/log-factory/compare/v1.0.4...v1.0.5) (2025-02-25)
 
 
