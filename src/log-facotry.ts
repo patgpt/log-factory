@@ -14,7 +14,15 @@ import type {
 } from './types'
 import { createSafePath, createSafePathWithSuffix, getDefaultLogPath, joinSafePaths, MB } from './utils'
 
-// Create immutable config object with type assertions
+/**
+ * Configuration object for Winston logger levels and colors
+ * 
+ * Defines the hierarchy of log levels (error being highest priority) and
+ * associates colors with each level for console output
+ * 
+ * @remarks
+ * This is marked as `const` to ensure immutability throughout the application
+ */
 const config: LoggerConfig = {
   levels: {
     error: 0,
@@ -39,7 +47,17 @@ const config: LoggerConfig = {
 // Add colors to Winston
 winston.addColors(config.colors)
 
-// Default options with strict environment mapping and size constants
+/**
+ * Default logger options for different environments
+ * 
+ * @remarks
+ * Provides optimized configurations for development, production, and test environments:
+ * - Development: Debug-focused with console output and pretty printing
+ * - Production: Performance-focused with file rotation and minimal console output
+ * - Test: Minimal configuration suitable for automated testing
+ * 
+ * All configurations use type assertion to ensure type safety
+ */
 const defaultOptions: DefaultOptions = {
   development: {
     level: 'debug' as LogLevel,
@@ -79,11 +97,31 @@ const defaultOptions: DefaultOptions = {
   },
 } as const
 
-// Type guard for environment
+/**
+ * Type guard to check if a string is a valid environment
+ * 
+ * @param env - The environment string to validate
+ * @returns True if the environment is valid ('development', 'production', or 'test')
+ * 
+ * @example
+ * ```ts
+ * if (isValidEnvironment('staging')) {
+ *   // This won't execute as 'staging' is not a valid environment
+ * }
+ * ```
+ */
 const isValidEnvironment = (env: string): env is Environment => 
   ['development', 'production', 'test'].includes(env)
 
-// Custom pretty print format (optional)
+/**
+ * Custom Winston format for pretty-printing JSON logs
+ * 
+ * @remarks
+ * Transforms JSON log messages into a more readable "doge meme" format
+ * Example: `{"user": "john"}` becomes `< wow "user" such "john" >`
+ * 
+ * If the message isn't valid JSON or doesn't start with '{', it remains unchanged
+ */
 const prettyConsoleFormat = winston.format((info) => {
   if (typeof info.message === 'string' && info.message.startsWith('{')) {
     try {
@@ -101,11 +139,51 @@ const prettyConsoleFormat = winston.format((info) => {
   return info
 })()
 
-// Main logger creation function
+/**
+ * Creates a Winston logger with the specified options
+ * 
+ * @param options - Configuration options for the logger
+ * @returns A configured Winston logger instance
+ * 
+ * @remarks
+ * This is the main function of the library. It creates a logger with:
+ * - Environment-specific defaults (development, production, test)
+ * - File and console transports based on configuration
+ * - Optional daily log rotation
+ * - Separate error and warning log files
+ * - Type-safe path handling
+ * 
+ * The function will use environment-specific defaults based on NODE_ENV,
+ * defaulting to 'development' if not specified.
+ * 
+ * @example
+ * Basic usage:
+ * ```ts
+ * const logger = createLogger();
+ * logger.info('Application started');
+ * ```
+ * 
+ * @example
+ * Custom configuration:
+ * ```ts
+ * const logger = createLogger({
+ *   logName: 'api-server',
+ *   logDirectory: '/var/logs',
+ *   level: 'info',
+ *   maxFileSize: MB(10),
+ *   useDailyRotation: true
+ * });
+ * ```
+ * 
+ * @throws Will throw an error if the environment is invalid or if log directory creation fails
+ */
 export const createLogger = (
   options: Partial<LoggerOptions> = {}
 ): winston.Logger => {
   const env = process.env.NODE_ENV || 'development'
+  if (!process.env.NODE_ENV) {
+    console.warn('NODE_ENV not set, defaulting to development environment')
+  }
   if (!isValidEnvironment(env)) {
     throw new Error(`Invalid environment: ${env}`)
   }
@@ -143,6 +221,10 @@ export const createLogger = (
     customFormat,
   } = finalOptions
 
+  /**
+   * Create the full log directory path by joining the base directory and logger name
+   * This ensures logs for different loggers are stored in separate subdirectories
+   */
   const logDir = joinSafePaths(logDirectory, logName)
 
   // Ensure log directory exists with error handling
@@ -156,7 +238,10 @@ export const createLogger = (
     throw error
   }
 
-  // Timestamp format with locale support
+  /**
+   * Format for timestamps with locale support
+   * Uses the specified locale (defaults to 'en-US') and formats date/time components
+   */
   const dateFormat = winston.format.timestamp({
     format: () =>
       new Date().toLocaleString(locale || 'en-US', {
@@ -169,6 +254,10 @@ export const createLogger = (
       }),
   })
 
+  /**
+   * Format for log files
+   * Combines timestamp and formatted message with level in uppercase
+   */
   const fileFormat = winston.format.combine(
     dateFormat,
     winston.format.printf(
@@ -177,6 +266,10 @@ export const createLogger = (
     )
   )
 
+  /**
+   * Format for console output
+   * Applies pretty printing and colorization based on configuration
+   */
   const consoleFormat = winston.format.combine(
     prettyPrint ? prettyConsoleFormat : winston.format.simple(),
     colorize ? winston.format.colorize({ all: true }) : winston.format.simple(),
@@ -185,6 +278,7 @@ export const createLogger = (
 
   const transports: winston.transport[] = []
 
+  // Add console transport if enabled
   if (enableConsoleLogging) {
     transports.push(
       new winston.transports.Console({
@@ -193,7 +287,11 @@ export const createLogger = (
     )
   }
 
+  // Add file transports if enabled
   if (enableFileLogging) {
+    /**
+     * Common options for all file transports
+     */
     const baseFileOptions = {
       maxsize: maxFileSize,
       maxFiles,
@@ -202,11 +300,18 @@ export const createLogger = (
       tailable: true,
     }
 
+    /**
+     * Creates a type-safe log file path with the given suffix
+     * 
+     * @param suffix - The suffix to append to the log file name
+     * @returns A type-safe log file path
+     */
     const createLogPath = (suffix: LogFileNameSuffix): LogFileName => {
       const baseLogPath = joinSafePaths(logDir, logName)
       return createSafePathWithSuffix(baseLogPath, suffix)
     }
 
+    // Add daily rotation transport or standard file transport
     if (useDailyRotation) {
       transports.push(
         new DailyRotateFile({
@@ -224,6 +329,7 @@ export const createLogger = (
       )
     }
 
+    // Add separate error log transport if enabled
     if (separateErrorLog) {
       transports.push(
         new winston.transports.File({
@@ -234,6 +340,7 @@ export const createLogger = (
       )
     }
 
+    // Add separate warning log transport if enabled
     if (separateWarnLog) {
       transports.push(
         new winston.transports.File({
@@ -245,10 +352,12 @@ export const createLogger = (
     }
   }
 
+  // Add any custom transports
   if (customTransports) {
     transports.push(...customTransports)
   }
 
+  // Create and return the configured Winston logger
   return winston.createLogger({
     levels: config.levels,
     level: level || 'info',
@@ -260,7 +369,25 @@ export const createLogger = (
   })
 }
 
-// Simplified logger creation
+/**
+ * Creates a simple logger with environment-specific defaults
+ * 
+ * @param env - The environment to use for configuration defaults
+ * @returns A configured Winston logger instance
+ * 
+ * @remarks
+ * This is a convenience function that creates a logger with the default options
+ * for the specified environment. It's useful when you don't need custom configuration.
+ * 
+ * @example
+ * ```ts
+ * // Create a production logger with production defaults
+ * const logger = createSimpleLogger('production');
+ * 
+ * // Create a logger with development defaults (default)
+ * const devLogger = createSimpleLogger();
+ * ```
+ */
 export const createSimpleLogger = (
   env: Environment = 'development'
 ): winston.Logger => {
