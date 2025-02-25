@@ -1,7 +1,7 @@
 # log-factory 🪵✨
 
 <div align="center">
-
+[![Publish Package](https://github.com/patgpt/log-factory/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/patgpt/log-factory/actions/workflows/publish.yml)
 [![npm version](https://badge.fury.io/js/log-factory.svg)](https://badge.fury.io/js/log-factory)
 [![Tests](https://github.com/patgpt/log-factory/actions/workflows/tests.yml/badge.svg)](https://github.com/patgpt/log-factory/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/patgpt/log-factory/branch/main/graph/badge.svg)](https://codecov.io/gh/patgpt/log-factory)
