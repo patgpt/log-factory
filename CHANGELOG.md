@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/patgpt/log-factory/compare/v1.0.4...v1.0.5) (2025-02-25)
+
+
+### Bug Fixes
+
+* revert package name in bun.lock to log-factory and update repository URL format in package.json ([147bc73](https://github.com/patgpt/log-factory/commit/147bc73d803a8a2449db237838fa13e23b654db4))
+
 ## [1.0.4](https://github.com/patgpt/log-factory/compare/v1.0.3...v1.0.4) (2025-02-25)
 
 
