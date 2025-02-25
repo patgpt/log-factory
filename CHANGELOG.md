@@ -1,3 +1,11 @@
+## [1.0.8](https://github.com/patgpt/loggerama3000/compare/v1.0.7...v1.0.8) (2025-02-25)
+
+
+### Bug Fixes
+
+* bump version to 1.0.7 in package.json ([6cebe2c](https://github.com/patgpt/loggerama3000/commit/6cebe2c5f7cd442c67d288abc044fe911205f917))
+* update references and URLs to loggerama3000 in documentation and package files ([82685a8](https://github.com/patgpt/loggerama3000/commit/82685a8fae8330c0bdc4d46577ee981a3b889ed7))
+
 # Changelog
 
 ## [1.0.5](https://github.com/patgpt/loggerama3000/compare/v1.0.4...v1.0.5) (2025-02-25)
