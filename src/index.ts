@@ -27,6 +27,7 @@
  *   useDailyRotation: true
  * });
  * ```
+ * @description This is a simple logger that uses the default options.
  */
 
 // Export the default logger creation function
