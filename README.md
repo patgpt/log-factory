@@ -1,6 +1,6 @@
 # log-factory 🪵✨
 
-<div align="center">
+ 
 [![Publish Package](https://github.com/patgpt/log-factory/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/patgpt/log-factory/actions/workflows/publish.yml)
 [![npm version](https://badge.fury.io/js/log-factory.svg)](https://badge.fury.io/js/log-factory)
 [![Tests](https://github.com/patgpt/log-factory/actions/workflows/tests.yml/badge.svg)](https://github.com/patgpt/log-factory/actions/workflows/tests.yml)
@@ -10,8 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Winston](https://img.shields.io/badge/winston-logger-brightgreen)](https://github.com/winstonjs/winston)
 [![Bun](https://img.shields.io/badge/Bun-compatible-black?logo=bun)](https://bun.sh)
-
-</div>
+ 
 
 <p align="center">
   <strong>A flexible and type-safe logging solution built with Winston, designed for Node.js and Bun applications.</strong>
