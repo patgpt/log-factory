@@ -1,14 +1,14 @@
-# Contributing to log-factory 🤝
+# Contributing to loggerama3000 🤝
 
-Thank you for considering contributing to log-factory! This document provides guidelines and instructions to help you get started.
+Thank you for considering contributing to loggerama3000! This document provides guidelines and instructions to help you get started.
 
 ## 🌱 Getting Started
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally
    ```bash
-   git clone https://github.com/yourusername/log-factory.git
-   cd log-factory
+   git clone https://github.com/yourusername/loggerama3000.git
+   cd loggerama3000
    ```
 3. **Install dependencies**
    ```bash

@@ -1,10 +1,10 @@
-# log-factory 🪵✨
+# loggerama3000 🪵✨
 
  
-[![Publish Package](https://github.com/patgpt/log-factory/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/patgpt/log-factory/actions/workflows/publish.yml)
-[![npm version](https://badge.fury.io/js/log-factory.svg)](https://badge.fury.io/js/log-factory)
-[![Tests](https://github.com/patgpt/log-factory/actions/workflows/tests.yml/badge.svg)](https://github.com/patgpt/log-factory/actions/workflows/tests.yml)
-[![codecov](https://codecov.io/gh/patgpt/log-factory/branch/main/graph/badge.svg)](https://codecov.io/gh/patgpt/log-factory)
+[![Publish Package](https://github.com/patgpt/loggerama3000/actions/workflows/publish.yml/badge.svg?event=release)](https://github.com/patgpt/loggerama3000/actions/workflows/publish.yml)
+[![npm version](https://badge.fury.io/js/loggerama3000.svg)](https://badge.fury.io/js/loggerama3000)
+[![Tests](https://github.com/patgpt/loggerama3000/actions/workflows/tests.yml/badge.svg)](https://github.com/patgpt/loggerama3000/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/patgpt/loggerama3000/branch/main/graph/badge.svg)](https://codecov.io/gh/patgpt/loggerama3000)
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -40,36 +40,34 @@
 
 ## 📦 Installation
 
+**NPM**
 ```bash
-# Using npm
-npm install log-factory
+npm install loggerama3000
+```
 
-# Using Bun
-bun add log-factory
+**Bun**
+```bash
+bun add loggerama3000
+```
 
-# Using yarn
-yarn add log-factory
+**Yarn**
+```bash
+yarn add loggerama3000
 ```
 
 ## 🚀 Quick Start
 
 ```typescript
-import { createLogger } from 'log-factory';
+import { createLogger } from 'loggerama3000';
 
-// Create a logger with default settings
+// Create a logger with default options
 const logger = createLogger();
 
-// Log messages
-logger.info('Hello, World! 👋');
-logger.error('Something went wrong 💥', { error: 'details' });
-logger.warn('Warning message ⚠️');
-
-// Log structured data
-logger.info(JSON.stringify({
-  userId: 123,
-  action: 'login',
-  timestamp: new Date().toISOString()
-}));
+// Log messages with different levels
+logger.info('Application started');
+logger.debug('Loading configuration', { configPath: '/app/config.json' });
+logger.warn('Cache miss', { key: 'user:1234' });
+logger.error('Failed to connect to database', new Error('Connection timeout'));
 ```
 
 ## 🧩 Use Cases
@@ -78,7 +76,7 @@ logger.info(JSON.stringify({
 
 ```typescript
 // api/users.ts
-import { createLogger } from 'log-factory';
+import { createLogger } from 'loggerama3000';
 
 const logger = createLogger({
   logName: 'users-api',
@@ -114,7 +112,7 @@ export async function getUser(userId: string) {
 
 ```tsx
 // app/dashboard/page.tsx
-import { createLogger } from 'log-factory';
+import { createLogger } from 'loggerama3000';
 
 const logger = createLogger({
   logName: 'dashboard',
@@ -140,7 +138,7 @@ export default async function DashboardPage() {
 
 ```typescript
 // __tests__/user-service.test.ts
-import { createLogger } from 'log-factory';
+import { createLogger } from 'loggerama3000';
 import { UserService } from '../services/user-service';
 
 describe('UserService', () => {
@@ -178,7 +176,7 @@ const logger = createLogger({
 ### 🌍 Environment-Specific Configuration
 
 ```typescript
-import { MB } from 'log-factory/utils';
+import { MB } from 'loggerama3000/utils';
 
 // Development (default)
 const devLogger = createLogger({
@@ -205,7 +203,7 @@ const testLogger = createLogger({
 ### 🔧 Advanced Features
 
 ```typescript
-import { MB } from 'log-factory/utils';
+import { MB } from 'loggerama3000/utils';
 
 const logger = createLogger({
   // Basic settings
@@ -240,11 +238,11 @@ const logger = createLogger({
 
 ## 🔐 Type Safety Features
 
-log-factory provides strong type safety features:
+loggerama3000 provides strong type safety features:
 
 ```typescript
-import { createLogger } from 'log-factory';
-import { LogLevel } from 'log-factory/types';
+import { createLogger } from 'loggerama3000';
+import { LogLevel } from 'loggerama3000/types';
 
 // Type-safe log levels
 const level: LogLevel = 'info'; // Only valid levels allowed
@@ -294,7 +292,7 @@ Creates a new logger instance with the specified options.
 Creates a simple logger with environment-specific defaults.
 
 ```typescript
-import { createSimpleLogger } from 'log-factory';
+import { createSimpleLogger } from 'loggerama3000';
 
 const logger = createSimpleLogger('production');
 // Creates a production-optimized logger with reasonable defaults
@@ -303,7 +301,7 @@ const logger = createSimpleLogger('production');
 ### Utility Functions
 
 ```typescript
-import { MB, createSafePath, joinSafePaths } from 'log-factory/utils';
+import { MB, createSafePath, joinSafePaths } from 'loggerama3000/utils';
 
 // Convert megabytes to bytes
 const maxSize = MB(10); // 10MB in bytes
