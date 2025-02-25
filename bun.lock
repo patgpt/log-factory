@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "log-factory",
+      "name": "loggerama3000",
       "dependencies": {
         "winston": "^3.11.0",
         "winston-daily-rotate-file": "^5.0.0",

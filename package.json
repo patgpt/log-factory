@@ -1,5 +1,5 @@
 {
-  "name": "log-factory",
+  "name": "loggerama3000",
   "version": "1.0.5",
   "description": "A flexible and type-safe logging solution with Winston",
   "main": "dist/index.js",
